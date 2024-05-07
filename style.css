@@ -1,0 +1,225 @@
+body {
+	margin: 0;
+	padding: 0;
+	line-height: 0.8em;
+}
+
+#t01 {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+.cgiLogo {
+	width: 37px;
+	height: 37px;
+	border: none;
+}
+
+.etlform {
+	padding: 5px;
+}
+
+.btnNav {
+	width: 100px;
+	height: 22px;
+}
+
+.btnNavWide {
+	width: 130px;
+	height: 22px;
+}
+
+.btnScriptLauncher {
+	width: 104px;
+	height: 22px;
+	position: absolute;
+	left: 82px;
+}
+
+.header {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 1.2em;
+}
+
+.titleHeader {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 1.2em;
+	text-align: center;
+}
+
+.headerblack {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 1.2em;
+	color: white;
+	background: black;
+}
+
+.toprow {
+	height: 20px;
+}
+
+.message {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+	text-align: right;
+}
+
+textarea {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+	width: 300px;
+}
+
+table.gvlogs {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+	white-space: nowrap;
+	display: inline;
+	overflow: hidden;
+	/*table-layout: auto;*/
+}
+
+td.gvlogs {
+	display: inline;
+	overflow: visible;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.enabled {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.8em;
+	text-align: left;
+	color: Green;
+}
+
+.disabled {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 1.0em;
+	text-align: left;
+	color: Red;
+}
+
+div.fieldwrapper { /*field row DIV (includes two columns- Styled label column and 'thefield' column)*/
+	width: 50%; /*width of form rows*/
+	overflow: hidden;
+	padding: 1px 0;
+	font-family: helvetica, arial, sans-serif;
+}
+
+div.fieldwrapperInvoice { /*field row DIV (includes two columns- Styled label column and 'thefield' column)*/
+	width: 100%; /*width of form rows*/
+	overflow: hidden;
+	padding: 1px 0;
+	font-family: helvetica, arial, sans-serif;
+}
+
+div.fieldwrapperBOL { /*field row DIV (includes two columns- Styled label column and 'thefield' column)*/
+	width: 30%; /*width of form rows*/
+	overflow: hidden;
+	padding: 1px 0;
+	font-family: helvetica, arial, sans-serif;
+	float: left
+}
+
+div.fieldwrapper label.styledBOL { /* label elements that should be styled (left column within fieldwrapper DIV) */
+	float: left;
+	width: 80px; /*width of label (left column)*/
+	margin-right: 5px; /*spacing with right column*/
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+	font-weight: 500;
+}
+
+div.fieldwrapper label.styled { /* label elements that should be styled (left column within fieldwrapper DIV) */
+	float: left;
+	width: 80px; /*width of label (left column)*/
+	border-bottom: 1px solid red;
+	margin-right: 5px; /*spacing with right column*/
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+	font-weight: 500;
+}
+
+div.fieldwrapper label.styled2 { /* label elements that should be styled (left column within fieldwrapper DIV) */
+	float: left;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+	font-weight: 500;
+}
+
+div.fieldwrapper label { /* label elements that should be styled (left column within fieldwrapper DIV) */
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+	font-weight: 500;
+}
+
+div.fieldwrapper div.thefield { /* DIV that wraps around the actual form fields (right column within fieldwrapper DIV) */
+	width: 600px;
+	float: left;
+	margin-bottom: 5px; /* space following the field */
+}
+
+div.fieldwrapperInvoice div.thefield  { /* DIV that wraps around the actual form fields (right column within fieldwrapper DIV) */
+	width: 800px;
+	float: left;
+	margin-bottom: 5px; /* space following the field */
+}
+
+div.fieldwrapper div.thefieldWide input[type="text"] { /* style for INPUT type="text" fields. Has no effect in IE7 or below! */
+	width: 230px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+}
+
+div.fieldwrapper div.thefieldWide input[type="textarea"] { /* style for INPUT type="text" fields. Has no effect in IE7 or below! */
+	width: 230px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+}
+
+div.fieldwrapper div.thefield input[type="text"] { /* style for INPUT type="text" fields. Has no effect in IE7 or below! */
+	width: 110px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+}
+
+div.fieldwrapper div.thefieldNarrow input[type="text"] { /* style for INPUT type="text" fields. Has no effect in IE7 or below! */
+	width: 80px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.9em;
+}
+
+div.fieldwrapper div.thefield textarea { /* style for TEXTAREA fields. */
+	width: 230px;
+	height: 80px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.7em;
+}
+
+div.prompt {
+	width: 320px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 1.0em;
+	text-align: center
+}
+
+/* */
+
+#maincontainer {
+	/*width: 980px; /*Width of main container*/
+	margin: 0 auto; /*Center container on page*/
+}
+
+#topsection {
+	background: #ffffff;
+	height: 60px; /*Height of top section*/
+}
+
+#txt {
+	border: none;
+	font-family: verdana;
+	font-size: 16pt;
+	font-weight: bold;
+	border-right-color: #FFFFFF
+}

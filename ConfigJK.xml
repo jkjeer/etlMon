@@ -1,0 +1,13 @@
+<root>
+	<mail>
+		<smtp_server address="smtp.cgi.int" />
+		<group key="script_admin" recipients="jkjeer@cardinalcorp.com" />
+		<group key="bi_admins" recipients="corpbiadmins@cardinalcorp.com" />
+		<group key="reporting_logs" recipients="jkjeer@cardinalcorp.com" />
+		<group key="microstrategy_admins" recipients="jkjeer@cardinalcorp.com" />
+		<group key="microstrategy_admins_paging" recipients="9522393483@txt.att.net,6123094524@txt.att.net,6128021314@txt.att.net" />
+		<!--<group key="microstrategy_admins_paging" recipients="6128021314@txt.att.net" />-->
+	</mail>
+	<host name="cgd2bi2" />
+</root>
+

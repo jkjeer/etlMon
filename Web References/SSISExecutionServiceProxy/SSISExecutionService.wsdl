@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://cardinalcorp.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://cardinalcorp.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://cardinalcorp.com/">
+      <s:element name="executePackageWithParameterString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ParameterString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="executePackageWithParameterStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="executePackageWithParameterStringResult" type="tns:ResultRecord" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExecutionId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="DtsExecResult" type="tns:DTSExecResult" />
+          <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfDtsMessage" />
+          <s:element minOccurs="0" maxOccurs="1" name="Warnings" type="tns:ArrayOfDtsMessage" />
+          <s:element minOccurs="0" maxOccurs="1" name="Variables" type="tns:ArrayOfVariableRecord" />
+          <s:element minOccurs="0" maxOccurs="1" name="CGILogs" type="tns:ArrayOfCGILogRecord" />
+          <s:element minOccurs="0" maxOccurs="1" name="SSISLogs" type="tns:ArrayOfSSISLogRecord" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="DTSExecResult">
+        <s:restriction base="s:string">
+          <s:enumeration value="Failure" />
+          <s:enumeration value="Success" />
+          <s:enumeration value="Completion" />
+          <s:enumeration value="Canceled" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfDtsMessage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DtsMessage" nillable="true" type="tns:DtsMessage" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DtsMessage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubComponent" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TimeStamp" nillable="true" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfVariableRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="VariableRecord" nillable="true" type="tns:VariableRecord" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="VariableRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="QualifiedName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DataType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCGILogRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CGILogRecord" nillable="true" type="tns:CGILogRecord" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CGILogRecord">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="event_id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="event_type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="event_code" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="machine_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="package_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="task_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="user_name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="comments" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="insert_rows" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="update_rows" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="delete_rows" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="select_rows" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="create_date" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSSISLogRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SSISLogRecord" nillable="true" type="tns:SSISLogRecord" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SSISLogRecord">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Event" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Computer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Operator" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="executePackageWithParameterCollection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Parameters" type="tns:ArrayOfParameterRecord" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfParameterRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ParameterRecord" nillable="true" type="tns:ParameterRecord" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ParameterRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="executePackageWithParameterCollectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="executePackageWithParameterCollectionResult" type="tns:ResultRecord" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="executePackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="executePackageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="executePackageResult" type="tns:ResultRecord" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="executePackageFromFileSystemStore">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="executePackageFromFileSystemStoreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="executePackageFromFileSystemStoreResult" type="tns:ResultRecord" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="executePackageFromDbStore">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="executePackageFromDbStoreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="executePackageFromDbStoreResult" type="tns:ResultRecord" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResultRecord" nillable="true" type="tns:ResultRecord" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="executePackageWithParameterStringSoapIn">
+    <wsdl:part name="parameters" element="tns:executePackageWithParameterString" />
+  </wsdl:message>
+  <wsdl:message name="executePackageWithParameterStringSoapOut">
+    <wsdl:part name="parameters" element="tns:executePackageWithParameterStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="executePackageWithParameterCollectionSoapIn">
+    <wsdl:part name="parameters" element="tns:executePackageWithParameterCollection" />
+  </wsdl:message>
+  <wsdl:message name="executePackageWithParameterCollectionSoapOut">
+    <wsdl:part name="parameters" element="tns:executePackageWithParameterCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="executePackageSoapIn">
+    <wsdl:part name="parameters" element="tns:executePackage" />
+  </wsdl:message>
+  <wsdl:message name="executePackageSoapOut">
+    <wsdl:part name="parameters" element="tns:executePackageResponse" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromFileSystemStoreSoapIn">
+    <wsdl:part name="parameters" element="tns:executePackageFromFileSystemStore" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromFileSystemStoreSoapOut">
+    <wsdl:part name="parameters" element="tns:executePackageFromFileSystemStoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromDbStoreSoapIn">
+    <wsdl:part name="parameters" element="tns:executePackageFromDbStore" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromDbStoreSoapOut">
+    <wsdl:part name="parameters" element="tns:executePackageFromDbStoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="executePackageWithParameterStringHttpGetIn">
+    <wsdl:part name="PackageName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="ParameterString" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="executePackageWithParameterStringHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:message name="executePackageHttpGetIn">
+    <wsdl:part name="PackageName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="executePackageHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromFileSystemStoreHttpGetIn">
+    <wsdl:part name="PackageName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromFileSystemStoreHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromDbStoreHttpGetIn">
+    <wsdl:part name="PackageName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromDbStoreHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:message name="executePackageWithParameterStringHttpPostIn">
+    <wsdl:part name="PackageName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="ParameterString" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="executePackageWithParameterStringHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:message name="executePackageHttpPostIn">
+    <wsdl:part name="PackageName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="executePackageHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromFileSystemStoreHttpPostIn">
+    <wsdl:part name="PackageName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromFileSystemStoreHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromDbStoreHttpPostIn">
+    <wsdl:part name="PackageName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="executePackageFromDbStoreHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:portType name="SSISExecutionServiceSoap">
+    <wsdl:operation name="executePackageWithParameterString">
+      <wsdl:input message="tns:executePackageWithParameterStringSoapIn" />
+      <wsdl:output message="tns:executePackageWithParameterStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackageWithParameterCollection">
+      <wsdl:input message="tns:executePackageWithParameterCollectionSoapIn" />
+      <wsdl:output message="tns:executePackageWithParameterCollectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackage">
+      <wsdl:input message="tns:executePackageSoapIn" />
+      <wsdl:output message="tns:executePackageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromFileSystemStore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">omit .dtsx from PackageName</wsdl:documentation>
+      <wsdl:input message="tns:executePackageFromFileSystemStoreSoapIn" />
+      <wsdl:output message="tns:executePackageFromFileSystemStoreSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromDbStore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Package path of the form \DataWarehouse\LegacySales\CG_SOPORD</wsdl:documentation>
+      <wsdl:input message="tns:executePackageFromDbStoreSoapIn" />
+      <wsdl:output message="tns:executePackageFromDbStoreSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="SSISExecutionServiceHttpGet">
+    <wsdl:operation name="executePackageWithParameterString">
+      <wsdl:input message="tns:executePackageWithParameterStringHttpGetIn" />
+      <wsdl:output message="tns:executePackageWithParameterStringHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackage">
+      <wsdl:input message="tns:executePackageHttpGetIn" />
+      <wsdl:output message="tns:executePackageHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromFileSystemStore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">omit .dtsx from PackageName</wsdl:documentation>
+      <wsdl:input message="tns:executePackageFromFileSystemStoreHttpGetIn" />
+      <wsdl:output message="tns:executePackageFromFileSystemStoreHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromDbStore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Package path of the form \DataWarehouse\LegacySales\CG_SOPORD</wsdl:documentation>
+      <wsdl:input message="tns:executePackageFromDbStoreHttpGetIn" />
+      <wsdl:output message="tns:executePackageFromDbStoreHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="SSISExecutionServiceHttpPost">
+    <wsdl:operation name="executePackageWithParameterString">
+      <wsdl:input message="tns:executePackageWithParameterStringHttpPostIn" />
+      <wsdl:output message="tns:executePackageWithParameterStringHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackage">
+      <wsdl:input message="tns:executePackageHttpPostIn" />
+      <wsdl:output message="tns:executePackageHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromFileSystemStore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">omit .dtsx from PackageName</wsdl:documentation>
+      <wsdl:input message="tns:executePackageFromFileSystemStoreHttpPostIn" />
+      <wsdl:output message="tns:executePackageFromFileSystemStoreHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromDbStore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Package path of the form \DataWarehouse\LegacySales\CG_SOPORD</wsdl:documentation>
+      <wsdl:input message="tns:executePackageFromDbStoreHttpPostIn" />
+      <wsdl:output message="tns:executePackageFromDbStoreHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SSISExecutionServiceSoap" type="tns:SSISExecutionServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="executePackageWithParameterString">
+      <soap:operation soapAction="http://cardinalcorp.com/executePackageWithParameterString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageWithParameterCollection">
+      <soap:operation soapAction="http://cardinalcorp.com/executePackageWithParameterCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackage">
+      <soap:operation soapAction="http://cardinalcorp.com/executePackage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromFileSystemStore">
+      <soap:operation soapAction="http://cardinalcorp.com/executePackageFromFileSystemStore" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromDbStore">
+      <soap:operation soapAction="http://cardinalcorp.com/executePackageFromDbStore" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SSISExecutionServiceSoap12" type="tns:SSISExecutionServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="executePackageWithParameterString">
+      <soap12:operation soapAction="http://cardinalcorp.com/executePackageWithParameterString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageWithParameterCollection">
+      <soap12:operation soapAction="http://cardinalcorp.com/executePackageWithParameterCollection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackage">
+      <soap12:operation soapAction="http://cardinalcorp.com/executePackage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromFileSystemStore">
+      <soap12:operation soapAction="http://cardinalcorp.com/executePackageFromFileSystemStore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromDbStore">
+      <soap12:operation soapAction="http://cardinalcorp.com/executePackageFromDbStore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SSISExecutionServiceHttpGet" type="tns:SSISExecutionServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="executePackageWithParameterString">
+      <http:operation location="/executePackageWithParameterString" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackage">
+      <http:operation location="/executePackage" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromFileSystemStore">
+      <http:operation location="/executePackageFromFileSystemStore" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromDbStore">
+      <http:operation location="/executePackageFromDbStore" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SSISExecutionServiceHttpPost" type="tns:SSISExecutionServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="executePackageWithParameterString">
+      <http:operation location="/executePackageWithParameterString" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackage">
+      <http:operation location="/executePackage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromFileSystemStore">
+      <http:operation location="/executePackageFromFileSystemStore" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executePackageFromDbStore">
+      <http:operation location="/executePackageFromDbStore" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SSISExecutionService">
+    <wsdl:port name="SSISExecutionServiceSoap" binding="tns:SSISExecutionServiceSoap">
+      <soap:address location="http://cgd2bi2/SSISExecutionService/SSISExecutionService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SSISExecutionServiceSoap12" binding="tns:SSISExecutionServiceSoap12">
+      <soap12:address location="http://cgd2bi2/SSISExecutionService/SSISExecutionService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SSISExecutionServiceHttpGet" binding="tns:SSISExecutionServiceHttpGet">
+      <http:address location="http://cgd2bi2/SSISExecutionService/SSISExecutionService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SSISExecutionServiceHttpPost" binding="tns:SSISExecutionServiceHttpPost">
+      <http:address location="http://cgd2bi2/SSISExecutionService/SSISExecutionService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

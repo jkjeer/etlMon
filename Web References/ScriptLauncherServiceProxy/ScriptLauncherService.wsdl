@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://cardinalcorp.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://cardinalcorp.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://cardinalcorp.com/">
+      <s:element name="ExecutePowershellScript">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workingDirectory" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="scriptName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="arguments" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecutePowershellScriptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExecutePowershellScriptResult" type="tns:ResultRecord" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="StandardOutput" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StandardError" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StandardInput" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ResultRecord" nillable="true" type="tns:ResultRecord" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ExecutePowershellScriptSoapIn">
+    <wsdl:part name="parameters" element="tns:ExecutePowershellScript" />
+  </wsdl:message>
+  <wsdl:message name="ExecutePowershellScriptSoapOut">
+    <wsdl:part name="parameters" element="tns:ExecutePowershellScriptResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecutePowershellScriptHttpGetIn">
+    <wsdl:part name="workingDirectory" type="s:string" />
+    <wsdl:part name="scriptName" type="s:string" />
+    <wsdl:part name="arguments" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExecutePowershellScriptHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:message name="ExecutePowershellScriptHttpPostIn">
+    <wsdl:part name="workingDirectory" type="s:string" />
+    <wsdl:part name="scriptName" type="s:string" />
+    <wsdl:part name="arguments" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExecutePowershellScriptHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultRecord" />
+  </wsdl:message>
+  <wsdl:portType name="ScriptLauncherServiceSoap">
+    <wsdl:operation name="ExecutePowershellScript">
+      <wsdl:input message="tns:ExecutePowershellScriptSoapIn" />
+      <wsdl:output message="tns:ExecutePowershellScriptSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ScriptLauncherServiceHttpGet">
+    <wsdl:operation name="ExecutePowershellScript">
+      <wsdl:input message="tns:ExecutePowershellScriptHttpGetIn" />
+      <wsdl:output message="tns:ExecutePowershellScriptHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ScriptLauncherServiceHttpPost">
+    <wsdl:operation name="ExecutePowershellScript">
+      <wsdl:input message="tns:ExecutePowershellScriptHttpPostIn" />
+      <wsdl:output message="tns:ExecutePowershellScriptHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ScriptLauncherServiceSoap" type="tns:ScriptLauncherServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExecutePowershellScript">
+      <soap:operation soapAction="http://cardinalcorp.com/ExecutePowershellScript" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ScriptLauncherServiceSoap12" type="tns:ScriptLauncherServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExecutePowershellScript">
+      <soap12:operation soapAction="http://cardinalcorp.com/ExecutePowershellScript" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ScriptLauncherServiceHttpGet" type="tns:ScriptLauncherServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ExecutePowershellScript">
+      <http:operation location="/ExecutePowershellScript" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ScriptLauncherServiceHttpPost" type="tns:ScriptLauncherServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ExecutePowershellScript">
+      <http:operation location="/ExecutePowershellScript" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ScriptLauncherService">
+    <wsdl:port name="ScriptLauncherServiceSoap" binding="tns:ScriptLauncherServiceSoap">
+      <soap:address location="http://cgd2bi2/scriptlauncherservice/ScriptLauncherService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ScriptLauncherServiceSoap12" binding="tns:ScriptLauncherServiceSoap12">
+      <soap12:address location="http://cgd2bi2/scriptlauncherservice/ScriptLauncherService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ScriptLauncherServiceHttpGet" binding="tns:ScriptLauncherServiceHttpGet">
+      <http:address location="http://cgd2bi2/scriptlauncherservice/ScriptLauncherService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ScriptLauncherServiceHttpPost" binding="tns:ScriptLauncherServiceHttpPost">
+      <http:address location="http://cgd2bi2/scriptlauncherservice/ScriptLauncherService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

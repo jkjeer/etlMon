@@ -1,0 +1,68 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="etlMon.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="etlMon_cgd2bi2_SSISExecutionService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://cgd2bi2/SSISExecutionService/SSISExecutionService.asmx</Value>
+    </Setting>
+    <Setting Name="etlMon_ScriptLauncherServiceProxy_ScriptLauncherService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://cgd2bi2/scriptlauncherservice/ScriptLauncherService.asmx</Value>
+    </Setting>
+    <Setting Name="csSSIS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=CGD1SQL12PD01;Initial Catalog=SSIS;Integrated Security=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=CGD1SQL12PD01;Initial Catalog=SSIS;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="csMSDB" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=CGD1SQL12PD01;Initial Catalog=MSDB;Integrated Security=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=CGD1SQL12PD01;Initial Catalog=MSDB;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="csStaging" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=CGD2SQLET;Initial Catalog=CorpInt;Integrated Security=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=CGD2SQLET;Initial Catalog=CorpInt;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="csDW" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=CGD1BISQL1;Initial Catalog=PSBI_WH_PROD;Integrated Security=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=CGD1BISQL1;Initial Catalog=PSBI_WH_PROD;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="csSGIG" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=SGIGSQLSRV;Initial Catalog=ShopFloor;Integrated Security=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=SGIGSQLSRV;Initial Catalog=ShopFloor;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="csSOALogs" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=CGD1SQL12PD01;Initial Catalog=INTEGRATION;Integrated Security=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=CGD1SQL12PD01;Initial Catalog=INTEGRATION;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="csICLogs" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=CGD1SQL12PD01;Initial Catalog=SSIS;Integrated Security=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=CGD1SQL12PD01;Initial Catalog=SSIS;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="csIntegration" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=CGD1BIETL1;Initial Catalog=INTEGRATION;Integrated Security=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=CGD1BIETL1;Initial Catalog=INTEGRATION;Integrated Security=True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
