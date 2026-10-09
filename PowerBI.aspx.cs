@@ -84,9 +84,9 @@ namespace etlMon
             foreach (string d in directories)
             {
                 var folder = new Folder();
-                folder.FolderName = System.IO.Path.GetFileNameWithoutExtension(d);
-                folder.FolderValue = System.IO.Path.GetFileNameWithoutExtension(d);
-                folders.Add(folder);
+                folder.FolderName = System.IO.Path.GetFileName(d);
+                folder.FolderValue = System.IO.Path.GetFileName(d);
+                if (!string.IsNullOrEmpty(folder.FolderValue)) folders.Add(folder);
             }
             selFolderName.Items.Clear();
             selFolderName.DataTextField = "FolderName";
@@ -376,7 +376,12 @@ namespace etlMon
                     workspacesSelected++;
                     if (item.Value.Length == 4)
                     {
-                        if (item.Value.EndsWith("CG") || item.Value.EndsWith("CT") || item.Value.EndsWith("IG") || item.Value.EndsWith("LG"))
+                        if (item.Value.EndsWith("NELG"))
+                        {
+                            plantsSelected++;
+                            plantSelected = $@"{item.Value}SQLSRV01";
+                        }
+                        else if (item.Value.EndsWith("CG") || item.Value.EndsWith("CT") || item.Value.EndsWith("IG") || item.Value.EndsWith("LG"))
                         {
                             plantsSelected++;
                             plantSelected = $@"{item.Value}SQLSRV03";
@@ -403,12 +408,11 @@ namespace etlMon
                 txtNewValue.Text = "";
                 txtNewValue.Enabled = false;
                 lblConnString.Visible = true;
-                lblConnString.Text = "Connection String Value will be derived from PlantCode plus 'SQLSRV03'";
+                lblConnString.Text = "Connection String Value will be derived from PlantCode plus 'SQLSRV03' except for NELGSQLSRV01";
                 lblConnString.ForeColor = Color.Green;
             }
             if (nonPlantsSelected > 0)
             {
-                //txtNewValue.Text = "";
                 txtNewValue.Enabled = true;
                 lblConnString.Visible = false;
             }
@@ -420,7 +424,6 @@ namespace etlMon
             }
             if (itemsSelected == 0)
             {
-                //txtNewValue.Text = "";
                 txtNewValue.Enabled = true;
                 lblConnString.Visible = false;
             }
@@ -536,8 +539,6 @@ namespace etlMon
             if (fnValidate())
             {
                 fnPublish();
-                //fnInclude_Changed();
-                //divGridHistory.Visible = true;
             }
             Logger.Info("btnPublish_Click END: " + Convert.ToDecimal((DateTime.Now.ToLocalTime() - startTime).TotalSeconds) + " SECONDS");
         }
@@ -682,7 +683,7 @@ namespace etlMon
                 {
                     if (item.Selected)
                     {
-                        if (plantsSelected > 1 && nonPlantsSelected == 0) newValue = $@"{item.Text}SQLSRV03";
+                        if (plantsSelected > 1 && nonPlantsSelected == 0) newValue = item.Text == "NELG" ? $@"{item.Text}SQLSRV01" : $@"{item.Text}SQLSRV03";
                         manager.PublishReport(workSpaceNameSource, rptNameSource, item.Value, reportNameTarget, parameterName, newValue, email);
                     }
                 }
@@ -693,19 +694,19 @@ namespace etlMon
                 {
                     if (item.Selected)
                     {
-                        if (plantsSelected > 1 && nonPlantsSelected == 0) newValue = $@"{item.Text}SQLSRV03";
-                        manager.PublishFile(folderName, fileName, item.Value, reportNameTarget, parameterName, newValue, email);
+                        if (plantsSelected > 1 && nonPlantsSelected == 0) newValue = item.Text == "NELG" ? $@"{item.Text}SQLSRV01" : $@"{item.Text}SQLSRV03";
+                        var databaseName = GetDatabaseName(item.Text);
+                        manager.PublishFile(folderName, fileName, item.Value, reportNameTarget, parameterName, newValue, databaseName, email);
                     }
                 }
             }
-
             else if (RadioButtonList1.SelectedValue == "UpdateParameter")
             {
                 foreach (ListItem item in cblWorkspaces.Items)
                 {
                     if (item.Selected)
                     {
-                        if (plantsSelected > 1 && nonPlantsSelected == 0) newValue = $@"{item.Text}SQLSRV03";
+                        if (plantsSelected > 1 && nonPlantsSelected == 0) newValue = item.Text == "NELG" ? $@"{item.Text}SQLSRV01" : $@"{item.Text}SQLSRV03";
                         manager.UpdateReportParameter(item.Value, reportNameTarget, parameterName, newValue, email);
                     }
                 }
@@ -810,9 +811,71 @@ namespace etlMon
                           FROM [PSBI_WH_PROD].[PROD].[ACTIVE_DIRECTORY]
                           WHERE [samaccountname] = @OperatorName"
                 };
-                // Plant Num
                 cmd.Parameters.Add(new SqlParameter("@OperatorName", SqlDbType.NVarChar, 100));
                 cmd.Parameters["@OperatorName"].Value = operatorName;
+                // Reader
+                Logger.Info(Logging.DbCmdString(cmd));
+                return cmd.ExecuteReader(CommandBehavior.SingleRow);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"ERROR: {e.Message}: {e.StackTrace}");
+                throw new Exception(e.Message);
+            }
+        }
+
+        protected string GetDatabaseName(string plantCode)
+        {
+            var startTime = DateTime.Now.ToLocalTime();
+            Logger.Info($"GetDatabaseName BEGIN: {DateTime.Now.ToLocalTime()}");
+            string databaseName = "";
+            String csDW = Properties.Settings.Default.csDW;
+            SqlConnection cnDW = new SqlConnection(csDW);
+            cnDW.Open();
+            try
+            {
+                using (IDataReader reader = GetDatabaseName(cnDW, plantCode))
+                {
+                    while (reader.Read())
+                    {
+                        databaseName = CastDbNull.To(reader["PLANT_REPORTING_DB_NAME"], string.Empty);
+                    }
+                    reader.Close();
+                }
+
+                Logger.Info($"databaseName: {databaseName}");
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"ERROR: {e.Message}: {e.StackTrace}");
+                throw new Exception(e.Message);
+            }
+            cnDW.Close();
+            Logger.Info("GetDatabaseName END: " + Convert.ToDecimal((DateTime.Now.ToLocalTime() - startTime).TotalSeconds) + " SECONDS");
+            return databaseName;
+        }
+
+        public static IDataReader GetDatabaseName(SqlConnection cnDW, string plantCode)
+        {
+            var startTime = DateTime.Now.ToLocalTime();
+            try
+            {
+                var cmd = new SqlCommand()
+                {
+                    Connection = cnDW,
+                    CommandTimeout = 0,
+                    CommandType = CommandType.Text,
+                    CommandText = $@"
+                        SELECT p.[PLANT_SHORT_DESC]
+                              ,d.[PLANT_REPORTING_DB_NAME]
+                          FROM [DW_MART].[PBI_ADMIN].[PLANT_REPORTING_DB_NAME] d
+                              LEFT OUTER JOIN [DW_MART].[DIM].[PLANT_DIM] p
+                                  ON p.[PLANT_NO] = d.[PLANT_NO]
+                          WHERE p.[PLANT_SHORT_DESC] = @PlantCode
+                    "
+                };
+                cmd.Parameters.Add(new SqlParameter("@PlantCode", SqlDbType.VarChar, 8));
+                cmd.Parameters["@PlantCode"].Value = plantCode;
                 // Reader
                 Logger.Info(Logging.DbCmdString(cmd));
                 return cmd.ExecuteReader(CommandBehavior.SingleRow);

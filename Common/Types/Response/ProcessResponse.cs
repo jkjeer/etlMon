@@ -34,6 +34,7 @@ namespace etlMon.Common.Types.Enterprise
             SqlBulkCopyResponses = new SqlBulkCopyResponses();
             SqlDmlResponses = new SqlDmlResponses();
             ConnectionStrings = new ConnectionStrings();
+            ConnectionStrings.Add(new ConnectionString("smtp", ConfigurationManager.AppSettings["SmtpHost"]));
             ProcessResponses = new ProcessResponses();
             Messages = new Messages();
             SerializedObjects = new SerializedObjects();
@@ -56,6 +57,7 @@ namespace etlMon.Common.Types.Enterprise
             SqlBulkCopyResponses = new SqlBulkCopyResponses();
             SqlDmlResponses = new SqlDmlResponses();
             ConnectionStrings = new ConnectionStrings();
+            ConnectionStrings.Add(new ConnectionString("smtp", ConfigurationManager.AppSettings["SmtpHost"]));
             ProcessResponses = new ProcessResponses();
             Messages = new Messages();
             SerializedObjects = new SerializedObjects();
@@ -76,6 +78,7 @@ namespace etlMon.Common.Types.Enterprise
             SqlBulkCopyResponses = new SqlBulkCopyResponses();
             SqlDmlResponses = new SqlDmlResponses();
             ConnectionStrings = new ConnectionStrings();
+            ConnectionStrings.Add(new ConnectionString("smtp", ConfigurationManager.AppSettings["SmtpHost"]));
             ProcessResponses = new ProcessResponses();
             Messages = new Messages();
             SerializedObjects = new SerializedObjects();

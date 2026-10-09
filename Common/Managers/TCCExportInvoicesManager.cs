@@ -367,6 +367,9 @@ namespace etlMon.Common.Managers
                 //Logger.Info($"Report XML: {xslOutput}");
                 var subject = $@"TCC Export Invoices [{ConfigurationManager.AppSettings["PrimaryEnvironment"]}]";
                 if (response.HasErrors()) subject = $"Error - {subject}";
+
+                Mail.StoreResponse($@"{ConfigurationManager.AppSettings["ProcessResponseFilePath"]}\{response.Plant.PlantCode}", subject, xslOutput);
+
                 Mail.SendHtml(ConfigurationManager.AppSettings["SmtpHost"],
                     ConfigurationManager.AppSettings["MailFromAddress"],
                     toConfigAddresses,

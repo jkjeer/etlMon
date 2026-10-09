@@ -103,12 +103,10 @@ namespace etlMon
                 {
                     var cnTCCSUPPORT = ConnectionManager.GetSqlConnectionFromKey("TCCSUPPORT");
                     cnTCCSUPPORT.Open();
-                    TCCExportInvoicesManager.TCCExportInvoices(cnTCCSUPPORT, RadioButtonList1.SelectedValue,
-                        plantCode, custNum, startDate, endDate, operatorName, email, startInvoice, endInvoice, invoiceList, includedDocuments);
+                    TCCExportInvoicesManager.TCCExportInvoices(cnTCCSUPPORT, RadioButtonList1.SelectedValue, plantCode, custNum, startDate, endDate, operatorName, email, startInvoice, endInvoice, invoiceList, includedDocuments);
                     cnTCCSUPPORT.Close();
                     Logger.Info($@"response.StatusDescription == ""OK""");
-                    lblJobResults.Text =
-                        $@"Invoice PDFs have been exported to: <strong>{exportPath}\{plantCode}</strong>";
+                    lblJobResults.Text = $@"Invoice PDFs have been exported to: <strong>{exportPath}\{plantCode}</strong>";
                     lblJobResults1.Text = $@"You can paste the bold text above into Windows File Explorer";
                     lblJobResults2.Text = $@"An email containing a link to the PDFs has been sent to:  {email}";
                     divJobResults.Visible = true;

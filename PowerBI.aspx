@@ -54,8 +54,8 @@
                     <div class="fieldwrapper">
                         <div class="thefieldWide">
                             <asp:RadioButtonList ID="RadioButtonList1" runat="server" AutoPostBack="true" RepeatDirection="Vertical" OnSelectedIndexChanged="fnSelActionChanged">
-                                <asp:ListItem Value="PublishReport" Selected="True">Publish Report</asp:ListItem>
-                                <asp:ListItem Value="PublishFile">Publish File</asp:ListItem>
+<%--                                <asp:ListItem Value="PublishReport" Selected="True">Publish Report</asp:ListItem>--%>
+                                <asp:ListItem Value="PublishFile" Selected="True">Publish File</asp:ListItem>
                                 <asp:ListItem Value="UpdateParameter">Update Report Parameter</asp:ListItem>
                             </asp:RadioButtonList>
                         </div>
@@ -163,6 +163,14 @@
                             <asp:Label ID="lblConnString" runat="server" Text="Connection String Value will be derived from PlantCode plus 'SQLSRV03'" ForeColor="Green" Font-Size="10" Visible="false" />
                         </div>
                     </div>
+
+<%--                    <div id="divSelDatabase" class="fieldwrapperWide" runat="server">
+                        <label for="txtDatabase" class="styledWide">New Value:</label>
+                        <div class="thefieldWide">
+                            <asp:TextBox ID="txtDatabase" runat="server" Font-Size="10" Width="180px" />
+                            <asp:Label ID="lblDatabase" runat="server" Text="Database name is stored in CGD1BISQL1.[DW_MART].[PBI_ADMIN].[PLANT_REPORTING_DB_NAME]" ForeColor="Green" Font-Size="10" Visible="true" />
+                        </div>
+                    </div>--%>
                 </div>
 
                 <div id="divSelUpdateParameter" runat="server" visible="false">

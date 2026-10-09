@@ -13,7 +13,6 @@ using etlMon.Common.Utilities;
 using System.Text;
 using System.Security.Policy;
 using System.Web;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace etlMon.Common.Managers
 {
@@ -21,7 +20,7 @@ namespace etlMon.Common.Managers
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public ProcessResponse PublishFile(string folderName, string fileName, string workspaceNameTarget, string reportNameTarget, string parameterName, string newValue, string email)
+        public ProcessResponse PublishFile(string folderName, string fileName, string workspaceNameTarget, string reportNameTarget, string parameterName, string newValue, string databaseName, string email)
         {
             var startTime = DateTime.Now.ToLocalTime();
             Logger.Info($"BEGIN: {DateTime.Now.ToLocalTime()}");
@@ -50,6 +49,8 @@ namespace etlMon.Common.Managers
                 ps.AddArgument(reportNameTarget);
                 ps.AddArgument(parameterName);
                 ps.AddArgument(newValue);
+                ps.AddArgument("Database");
+                ps.AddArgument(databaseName);
 
                 Collection<PSObject> psObjects;
                 psObjects = ps.Invoke();
@@ -113,6 +114,7 @@ namespace etlMon.Common.Managers
                 ReportNameTarget = reportNameTarget,
                 ParameterName = parameterName,
                 NewValue = newValue,
+                Database = databaseName,
                 URL = $@"http://cgd2intsvcqa/BIServices/BIServices.ReportRestService.svc/PublishFile?FolderName={folderName}&FileName={fileName}&WorkspaceNameTarget={workspaceNameTarget}&ReportNameTarget={reportNameTarget}&ParameterName={parameterName}&NewValue={newValue}SQLSRV03".Replace(" ", "%20"),
                 Script = $@"powershell -Command ''C:\inetpub\wwwroot\BIServices\PowerShell\PublishReport.ps1 -WorkspaceNameSource '{folderName}' -ReportNameSource '{fileName}' -WorkspaceNameTarget '{workspaceNameTarget}' -ReportNameTarget '{reportNameTarget}' -ParameterName '{parameterName}' -NewValue '{newValue}SQLSRV03'''"
             };
@@ -136,6 +138,9 @@ namespace etlMon.Common.Managers
                 Logger.Info($@"Report XML: {xslOutput}");
                 var subject = @"BI Publish File";
                 if (response.HasErrors()) subject = $@"Error - {subject}";
+
+                Mail.StoreResponse($@"{ConfigurationManager.AppSettings["ProcessResponseFilePath"]}\CORP", subject, xslOutput);
+
                 Mail.SendHtml(ConfigurationManager.AppSettings["SmtpHost"],
                     ConfigurationManager.AppSettings["MailFromAddress"],
                     toConfigAddresses,
@@ -267,6 +272,9 @@ namespace etlMon.Common.Managers
                 Logger.Info($@"Report XML: {xslOutput}");
                 var subject = @"BI Publish Report";
                 if (response.HasErrors()) subject = $@"Error - {subject}";
+
+                Mail.StoreResponse($@"{ConfigurationManager.AppSettings["ProcessResponseFilePath"]}\{response.Plant.PlantCode}", subject, xslOutput);
+
                 Mail.SendHtml(ConfigurationManager.AppSettings["SmtpHost"],
                     ConfigurationManager.AppSettings["MailFromAddress"],
                     toConfigAddresses,
@@ -390,6 +398,9 @@ namespace etlMon.Common.Managers
                 Logger.Info($@"Report XML: {xslOutput}");
                 var subject = @"BI Update Report Parameter";
                 if (response.HasErrors()) subject = $@"Error - {subject}";
+
+                Mail.StoreResponse($@"{ConfigurationManager.AppSettings["ProcessResponseFilePath"]}\{response.Plant.PlantCode}", subject, xslOutput);
+
                 Mail.SendHtml(ConfigurationManager.AppSettings["SmtpHost"],
                     ConfigurationManager.AppSettings["MailFromAddress"],
                     toConfigAddresses,

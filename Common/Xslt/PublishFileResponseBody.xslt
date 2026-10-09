@@ -54,6 +54,7 @@
 						<td align="left">Report Name Target</td>
 						<td align="left">Parameter Name</td>
 						<td align="left">New Value</td>
+						<td align="left">Database</td>
 					</tr>
 					<xsl:apply-templates select="SummaryNode">
 					</xsl:apply-templates>
@@ -177,6 +178,9 @@
 			</td>
 			<td>
 				<xsl:value-of select="NewValue"/>
+			</td>
+			<td>
+				<xsl:value-of select="Database"/>
 			</td>
 			<!--
       <td>

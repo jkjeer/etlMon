@@ -1,12 +1,14 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
-using NLog;
 
 namespace etlMon.Common.Utilities
 {
@@ -18,11 +20,14 @@ namespace etlMon.Common.Utilities
         {
             try
             {
-                var sc = new SmtpClient
+                var client = new SmtpClient
                 {
-                    UseDefaultCredentials = true,
-                    Host = ConfigurationManager.AppSettings["SmtpHost"]
+                    Host = ConfigurationManager.AppSettings["SmtpHost"],
+                    Port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]),
+                    EnableSsl = bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]),
+                    UseDefaultCredentials = bool.Parse(ConfigurationManager.AppSettings["UseDefaultCredentials"])
                 };
+                if (!bool.Parse(ConfigurationManager.AppSettings["UseDefaultCredentials"])) client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["SendingAccount"], ConfigurationManager.AppSettings["SendingPassword"]);
                 var msg = new MailMessage
                 {
                     From = new MailAddress(from)
@@ -33,7 +38,7 @@ namespace etlMon.Common.Utilities
                 msg.Subject = subject;
                 msg.IsBodyHtml = true;
                 msg.Body = body;
-                sc.Send(msg);
+                client.Send(msg);
             }
             catch (Exception e)
             {
@@ -46,11 +51,14 @@ namespace etlMon.Common.Utilities
         {
             try
             {
-                var sc = new SmtpClient
+                var client = new SmtpClient
                 {
-                    UseDefaultCredentials = true,
-                    Host = ConfigurationManager.AppSettings["SmtpHost"]
+                    Host = ConfigurationManager.AppSettings["SmtpHost"],
+                    Port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]),
+                    EnableSsl = bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]),
+                    UseDefaultCredentials = bool.Parse(ConfigurationManager.AppSettings["UseDefaultCredentials"])
                 };
+                if (!bool.Parse(ConfigurationManager.AppSettings["UseDefaultCredentials"])) client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["SendingAccount"], ConfigurationManager.AppSettings["SendingPassword"]);
                 var msg = new MailMessage
                 {
                     From = new MailAddress(from)
@@ -61,7 +69,7 @@ namespace etlMon.Common.Utilities
                 msg.Subject = subject;
                 msg.IsBodyHtml = true;
                 msg.Body = body;
-                sc.SendMailAsync(msg);
+                client.SendMailAsync(msg);
             }
             catch (Exception e)
             {
@@ -74,10 +82,14 @@ namespace etlMon.Common.Utilities
         {
             try
             {
-                var sc = new SmtpClient
+                var client = new SmtpClient
                 {
-                    Host = ConfigurationManager.AppSettings["SmtpHost"]
+                    Host = ConfigurationManager.AppSettings["SmtpHost"],
+                    Port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]),
+                    EnableSsl = bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]),
+                    UseDefaultCredentials = bool.Parse(ConfigurationManager.AppSettings["UseDefaultCredentials"])
                 };
+                if (!bool.Parse(ConfigurationManager.AppSettings["UseDefaultCredentials"])) client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["SendingAccount"], ConfigurationManager.AppSettings["SendingPassword"]);
                 var msg = new MailMessage
                 {
                     From = new MailAddress(from)
@@ -91,13 +103,31 @@ namespace etlMon.Common.Utilities
                 msg.Subject = subject;
                 msg.IsBodyHtml = true;
                 msg.Body = body;
-                sc.SendMailAsync(msg);
+                client.SendMailAsync(msg);
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
+
+        public static void StoreResponse(string plantPathName, string subject, string xslOutput)
+        {
+            try
+            {
+                Directory.CreateDirectory(plantPathName);
+                //subject = subject.Replace(".", "").Replace(":", "").Replace("[", "").Replace("]", "");
+                subject = string.Join("_", subject.Split(Path.GetInvalidFileNameChars()));
+                var fileName = $@"{plantPathName}\{subject} {DateTime.Now:yyyyMMdd} {DateTime.Now:hhmmss}.htm";
+                File.Delete(fileName);
+                File.WriteAllText(fileName, xslOutput);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
 
         /*****************************************************************************************************
         * Recipients
